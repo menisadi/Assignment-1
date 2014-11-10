@@ -44,25 +44,26 @@ int main (void) {
   else cout << "Unable to open file";
 
   // for each route search for rouds in it, and add 1 to count
-  size_t index0 = 0;
-  size_t index1 = 0;
-  size_t index2 = 0;
+  size_t indexStart = 0;
+  size_t indexMiddle = 0;
+  size_t indexEnd = 0;
   string tmpStr;
   for(std::vector<string>::iterator it = routes.begin(); it != routes.end(); ++it)
   {
-    //std::cout << *it << endl;
+    std::cout << *it << endl;
     tmpStr = *it;
 
-    index0 = 0;
-    index1 = tmpStr.find_first_of(',');
-    while (index2 != string::npos)  //someting go worng in this "if"
+    indexStart = 0;
+    indexMiddle = tmpStr.find_first_of(',');
+    while (indexEnd != string::npos)  //someting go worng in this "if"
     {
-      index2 = tmpStr.find_first_of(',',index1+1);
-      string nameOfRoadForComp = tmpStr.substr(index0,index2);
+      indexEnd = tmpStr.find_first_of(',',indexMiddle+1);
+      string nameOfRoadForComp = tmpStr.substr(indexStart,indexEnd);
       //for // search
       std::cout << nameOfRoadForComp << endl;
-      index0 = index1+4;
-      index1=index2;
+      //index0 = indexMiddle+4;
+      indexStart=indexMiddle;
+      indexMiddle=indexEnd;
     }
   }
 
