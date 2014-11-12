@@ -2,46 +2,71 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
+#include <vector>
+
 using namespace std;
 
-int main () {
+int main (void) {
   // read rouds to vector
-  string line; 
+  string line;
   ifstream myfile ("Roads.conf");
-  vector<string> roads;
-  vector<int> roadsCout;
+  vector<string> roadsName;
+  vector<int> roadsLength;
+  vector<int> roadsCount;
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
     {
-      roads.push_back(line); 
-      roadsCout.push_back(0); // initialize count for specipic rouad
+      int index = line.find_first_of(',');
+      index = line.find_first_of(',',index + 1);
+      string name = line.substr(0,index - 1);
+      int length = atoi(line.substr(index+1,line.length()).c_str());
+      roadsName.push_back(name);
+      roadsLength.push_back(length);
+      roadsCount.push_back(0); // initialize count for specipic rouad
     }
     myfile.close();
   }
-  else cout << "Unable to open file"; 
+  else cout << "Unable to open file";
 
   //read routs to vector
-  myfile ("Routs.conf");
-  vector<string> roats;
-  if (myfile.is_open())
+  ifstream myfile2 ("Routes.conf");
+  vector<string> routes;
+  if (myfile2.is_open())
   {
-    while ( getline (myfile,line) )
+    while ( getline (myfile2,line) )
     {
-      roats.push_back(line); 
+    routes.push_back(line);
     }
-    myfile.close();
+    myfile2.close();
   }
-  else cout << "Unable to open file"; 
-  
-  // for each route search for rouds in it, and add 1 to count 
-  for(std::vector<string>::iterator it = roats.begin(); it != roads.end(); ++it)
+  else cout << "Unable to open file";
+
+  // for each route search for rouds in it, and add 1 to count
+  /*size_t indexStart = 0;
+  size_t indexMiddle = 0;
+  size_t indexEnd = 0;
+  string tmpStr;*/
+  for(std::vector<string>::iterator it = routes.begin(); it != routes.end(); ++it)
   {
-    int index = *it.find_first_of(',');
-    string tmp = roads.substr(index+1,roats.lenght());
-    index = tmp.find_first_of(',');
-    string roadName = tmp.substr(index+1,roats.lenght());
+    std::cout << *it << endl;
+    *it.append(',');
+/*    tmpStr = *it;
+
+    indexStart = 0;
+    indexMiddle = tmpStr.find_first_of(',');
+    while (indexEnd != string::npos)
+    {
+      indexEnd = tmpStr.find_first_of(',',indexMiddle+1);
+      string nameOfRoadForComp = tmpStr.substr(indexStart,indexEnd);
+      //for // search
+      std::cout << nameOfRoadForComp << endl;
+      //index0 = indexMiddle+4;
+      indexStart=indexMiddle;
+      indexMiddle=indexEnd; 
+    } */
   }
-      
+
   return 0;
 }
