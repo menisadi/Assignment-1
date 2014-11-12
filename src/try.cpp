@@ -50,8 +50,8 @@ int main (void) {
   string tmpStr;*/
   for(std::vector<string>::iterator it = routes.begin(); it != routes.end(); ++it)
   {
+    (*it).append("","");
     std::cout << *it << endl;
-    *it.append(',');
 /*    tmpStr = *it;
 
     indexStart = 0;
