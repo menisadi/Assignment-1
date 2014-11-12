@@ -20,9 +20,13 @@ int main (void) {
     {
       int index = line.find_first_of(',');
       index = line.find_first_of(',',index + 1);
-      string name = line.substr(0,index - 1);
-      int length = atoi(line.substr(index+1,line.length()).c_str());
+      string name = line.substr(0,index);
+      string sLength = line.substr(index+1,line.length()-index);
+      // std::cout << sLength << endl;
+      int length = atoi(sLength.c_str());
+      // std::cout << length << endl;
       roadsName.push_back(name);
+      // std::cout << name << endl;
       roadsLength.push_back(length);
       roadsCount.push_back(0); // initialize count for specipic rouad
     }
@@ -64,7 +68,21 @@ int main (void) {
       indexEnd = tmpStr.find_first_of(',',indexMiddle) + 1;
       //std::cout << indexStart << " " << indexMiddle << " " << indexEnd  << endl;
       nameOfRoadForComp = tmpStr.substr(indexStart,(indexEnd - indexStart) - 1);
-      //for // search
+      
+      // search nameOfRoadForComp in roadsName and add 1 to the corresponding roadsCount
+      bool found = false;
+      size_t roadIndex = 0;
+      while ((!found) && (roadIndex < roadsName.size())) {
+	if (roadsName[roadIndex] == nameOfRoadForComp)
+	  found = true;
+	//std::cout << roadIndex << endl;
+	++roadIndex;
+      }	// at the end roadIndex wiil be equal to the corresponding index + 1;
+      roadIndex--;
+      roadsCount[roadIndex]++;
+      std::cout << roadIndex << endl;
+      std::cout << roadsCount[roadIndex] << endl;
+      
       std::cout << nameOfRoadForComp << endl;
       indexStart = indexMiddle;
       indexMiddle = indexEnd; 
