@@ -12,7 +12,7 @@ int main (void) {
   string line;
   ifstream myfile ("Roads.conf");
   vector<string> roadsName;
-  vector<int> roadsLength;
+  vector<double> roadsLength;
   vector<int> roadsCount;
   if (myfile.is_open())
   {
@@ -22,12 +22,9 @@ int main (void) {
       index = line.find_first_of(',',index + 1);
       string name = line.substr(0,index);
       string sLength = line.substr(index+1,line.length()-index);
-      // std::cout << sLength << endl;
       int length = atoi(sLength.c_str());
-      // std::cout << length << endl;
       roadsName.push_back(name);
-      // std::cout << name << endl;
-      roadsLength.push_back(length);
+      roadsLength.push_back((double) length);
       roadsCount.push_back(0); // initialize count for specipic rouad
     }
     myfile.close();
@@ -53,41 +50,41 @@ int main (void) {
   size_t indexEnd = 0;
   string tmpStr;
   string nameOfRoadForComp;
+  size_t roadIndex;
   
   for(std::vector<string>::iterator it = routes.begin(); it != routes.end(); ++it)
   {
     (*it).append(",");
-    //std::cout << *it << endl;
     tmpStr = *it;
 
     indexStart = 0;
     indexMiddle = tmpStr.find_first_of(',') + 1;
+    indexEnd = 0;
     
     while (indexEnd < tmpStr.length())
     {
       indexEnd = tmpStr.find_first_of(',',indexMiddle) + 1;
-      //std::cout << indexStart << " " << indexMiddle << " " << indexEnd  << endl;
       nameOfRoadForComp = tmpStr.substr(indexStart,(indexEnd - indexStart) - 1);
       
       // search nameOfRoadForComp in roadsName and add 1 to the corresponding roadsCount
       bool found = false;
-      size_t roadIndex = 0;
+      roadIndex = 0;
       while ((!found) && (roadIndex < roadsName.size())) {
 	if (roadsName[roadIndex] == nameOfRoadForComp)
 	  found = true;
-	//std::cout << roadIndex << endl;
-	++roadIndex;
+	  ++roadIndex;
       }	// at the end roadIndex wiil be equal to the corresponding index + 1;
       roadIndex--;
       roadsCount[roadIndex]++;
-      std::cout << roadIndex << endl;
-      std::cout << roadsCount[roadIndex] << endl;
-      
-      std::cout << nameOfRoadForComp << endl;
+
       indexStart = indexMiddle;
       indexMiddle = indexEnd; 
     }
   }
 
+  // calculate and print the streess factor
+  for(roadIndex = 0; roadIndex <roadsName.size(); ++roadIndex) {
+    std::cout << roadsName[roadIndex] << ',' << (roadsCount[roadIndex]/roadsLength[roadIndex]) << endl;
+  }
   return 0;
 }
