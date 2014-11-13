@@ -7,17 +7,17 @@ CC = g++
 CFLAGS = -g -Wall -Weffc++
 
 # the build target executable:
-TARGET = Assignment1
+TARGET = RoadStress
 
 all: $(TARGET)
 
 # Tool invocations
-# Executable "Assignment1" depends on the files roadStress.o and Assignment1.o.
+# Executable "RoadStress" depends on the files roadStress.o and Assignment1.o.
 $(TARGET): bin/roadStress.o bin/Assignment1.o
-	@echo 'Building target: Assignment1'
+	@echo 'Building target: RoadStress'
 	@echo 'Invoking: C++ Linker'
-	$(CC) -o bin/Assignment1 bin/roadStress.o bin/Assignment1.o
-	@echo 'Finished building target: Assignment1'
+	$(CC) -o bin/RoadStress bin/roadStress.o bin/Assignment1.o
+	@echo 'Finished building target: RoadStress'
 	@echo ' '
 
 #Depends on the source and header files
